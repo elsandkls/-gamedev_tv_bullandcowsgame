@@ -37,7 +37,7 @@ void PrintIntro()
 	int32 word_length = BCGame.GetMaxWordLength();
 	std::cout << "Welcome to Bulls and Cows, a fun word game\n";
 	std::cout << "Can you guess the " << word_length;
-	std::cout << " letter isogram I'm thinkng of?\n";
+	std::cout << " letter isogram I'm thinking of?\n";
 	std::cout << std::endl;
 }
 
@@ -66,18 +66,49 @@ void PlayGame()
 	int32 limit = BCGame.GetMaxTries();
 	//std::cout << limit << std::endl;
 	FText Guess = "";
+	EGuessStatus Status = EGuessStatus::GuessIsNull; //intialize
+
 	// loop for the number of user guesses -- lesson 53
 	for (int32 count = 1; count <= limit; count++)
 	{
-		Guess = GetUserInput(); 
-		EGuessStatus Status = BCGame.CheckGuessValidity(Guess);
+		while (Status != EGuessStatus::OK)
+		{
+			Guess = GetUserInput();
+			Status = BCGame.CheckGuessValidity(Guess);
+			switch (Status)
+			{
+				case EGuessStatus::IncorrectCharLength:
+					std::cout << "Please enter a " << BCGame.GetMaxWordLength() << " letter word. \n"; 
+					break;
+				case EGuessStatus::NotIsogram:
+					std::cout << "Please enter an Isogram. An Isogram has no duplicate letters. \n";
+					break;
+				case EGuessStatus::NotLowerCase:
+					std::cout << "Please enter all lower case characters. \n";
+					break;
+				case EGuessStatus::GuessIsNull:
+					std::cout << "Please enter a word. \n";
+					break;
+				default:
+					break;
+			}
+		}
 		// repeat the guess back to them
 		GameOutput(Guess);
 		//submit guess to game
 		FBullCowCount BullCowCount = BCGame.ProcessGuess(Guess);
-		std::cout << "Bulls = " << BullCowCount.Bulls << std::endl;
-		std::cout << "Cows = " << BullCowCount.Cows << std::endl;
-		std::cout << std::endl;
+		if (BullCowCount.Cows == 0 || BCGame.IsGameWon(Guess) == true)
+		{
+			// end game
+			return;
+		}
+		else
+		{
+			std::cout << "Bulls = " << BullCowCount.Bulls << std::endl;
+			std::cout << "Cows = " << BullCowCount.Cows << std::endl;
+			std::cout << std::endl;
+			Status = EGuessStatus::GuessIsNull; // reset to default to prepare for next user input round.
+		}
 	}
 	std::cout << std::endl;
 	// TODO summarize the game

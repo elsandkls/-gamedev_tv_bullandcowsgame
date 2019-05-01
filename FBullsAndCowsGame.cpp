@@ -44,9 +44,16 @@ void FBullsAndCowsGame::SetCurrentTry()
 	return;
 }
 
-bool FBullsAndCowsGame::IsGameWon() const
+bool FBullsAndCowsGame::IsGameWon(FString Guess)
 {
-	return false;
+	if (Guess == MyHiddenWord)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 EGuessStatus FBullsAndCowsGame::CheckGuessValidity(FString Guess)
@@ -62,7 +69,11 @@ EGuessStatus FBullsAndCowsGame::CheckGuessValidity(FString Guess)
 	else if (GetMaxWordLength() != Guess.length()) // if the guess length is wrong
 	{	// return error
 		return EGuessStatus::IncorrectCharLength;
-	}	
+	}
+	else if (Guess == "") // if the guess is emtpy or null
+	{	// return error
+		return EGuessStatus::GuessIsNull;
+	}
 	else // otherwise
 	{	// return ok
 		return EGuessStatus::OK;
