@@ -1,6 +1,7 @@
 #pragma once
 #include <string> 
 
+
 using FString = std::string; // compatibility with UnrealEngine
 using int32 = int; // compatibility with UnrealEngine
 
@@ -30,16 +31,20 @@ public:   //get and set members/actions
 
 	void Reset(); // TODO: change the return value later.
 	EGuessStatus CheckGuessValidity(FString);  // TODO: change the return value later.
-	bool IsIsogram(FString);
+	bool IsIsogram(FString);  
+	bool IsIsogramHashTable(FString);
 	bool IsLowerCase(FString);
 	void SetCurrentTry();
-	bool IsGameWon(FString);
+	bool IsGameWon(FString); 
 	FBullCowCount ProcessGuess(FString);
+	int32 GameLoop = 0;
 
 private:
 	// see initialization section for starting values
 	int32 MyCurrentTry; // private member variables
 	int32 MyMaxTries; // private member variables
-	int32 MaxWordLength; // private member variables
+	int32 MaxWordLength; // private member variables 
 	FString MyHiddenWord; 
+	FString MyHiddenWordList[6] = { "plants","fruity","shovel","bucket","garden","planet" };
+
 };

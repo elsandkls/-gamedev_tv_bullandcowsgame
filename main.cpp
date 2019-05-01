@@ -14,8 +14,9 @@ using int32 = int; // compatibility with UnrealEngine
 void PrintIntro();
 void PlayGame();
 FText UserInput(); 
-void GameOutput();
-bool AskToPlayAgain();
+void GameOutput(FText);
+bool AskToPlayAgain(); 
+void PrintGameSummary(FText);
 bool Answer = true;
 
 FBullsAndCowsGame BCGame; //instantiate a new game
@@ -100,6 +101,8 @@ void PlayGame()
 		if (BullCowCount.Cows == 0 || BCGame.IsGameWon(Guess) == true)
 		{
 			// end game
+			BCGame.GameLoop++;
+			PrintGameSummary(Guess);
 			return;
 		}
 		else
@@ -110,7 +113,9 @@ void PlayGame()
 			Status = EGuessStatus::GuessIsNull; // reset to default to prepare for next user input round.
 		}
 	}
+	PrintGameSummary(Guess);
 	std::cout << std::endl;
+	BCGame.GameLoop++;
 	// TODO summarize the game
 }
 
@@ -129,4 +134,18 @@ bool AskToPlayAgain()
 		UASSwitch = false;
 	}
 	return UASSwitch;
+}
+
+void PrintGameSummary(FText Guess)
+{
+	// introduce the game    
+	if (BCGame.IsGameWon(Guess) == true)
+	{
+		std::cout << "Well done! You win.\n";
+	}
+	else
+	{
+		std::cout << "Better luck next time.\n";
+	} 
+	std::cout << std::endl;
 }

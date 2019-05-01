@@ -1,4 +1,6 @@
 #include "FBullsAndCowsGame.h"
+#include <map>
+#define TMap std::map
 
 FBullsAndCowsGame::FBullsAndCowsGame()
 {
@@ -10,8 +12,8 @@ void FBullsAndCowsGame::Reset()
 {
 	// constants defintions
 	constexpr int32 MAX_TRIES = 5;
-	//constexpr int32 MAX_WORDLENGTH = 9;
-	const FString HIDDEN_WORD = "planet";
+	//constexpr int32 MAX_WORDLENGTH = 9; 
+	FString HIDDEN_WORD = MyHiddenWordList[GameLoop];
 	int32 MAX_WORDLENGTH = HIDDEN_WORD.length();
 
 	// Variables used in program
@@ -58,7 +60,11 @@ bool FBullsAndCowsGame::IsGameWon(FString Guess)
 
 EGuessStatus FBullsAndCowsGame::CheckGuessValidity(FString Guess)
 {
-	if (IsIsogram(Guess) == false) // if the guess isn't an isogram
+	//if (IsIsogram(Guess) == false ) // if the guess isn't an isogram
+	//{	// return error
+	//	return EGuessStatus::NotIsogram;
+	//}
+	if ( IsIsogramHashTable(Guess) == false) // if the guess isn't an isogram
 	{	// return error
 		return EGuessStatus::NotIsogram;
 	}
@@ -104,6 +110,26 @@ bool FBullsAndCowsGame::IsIsogram(FString Guess)
 		return true;
 	}
 }
+
+bool FBullsAndCowsGame::IsIsogramHashTable(FString Guess)
+{
+	TMap<char, bool> GuessMap;
+	int32 charMatchsFound = 0;
+	int32 charcount = 0; 
+	for (charcount = 0; charcount < Guess.length(); charcount++)
+	{ 
+		if (!GuessMap[Guess[charcount]] == true)
+		{
+			GuessMap[Guess[charcount]] = true;
+		}
+		else
+		{
+			return false;
+		}
+	}	 
+	return true; 
+}
+
 
 bool FBullsAndCowsGame::IsLowerCase(FString Guess)
 {
