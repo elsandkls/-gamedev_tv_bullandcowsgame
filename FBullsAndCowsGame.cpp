@@ -27,7 +27,8 @@ void FBullsAndCowsGame::Reset()
 
 int32 FBullsAndCowsGame::GetMaxTries() const
 {
-	return MyMaxTries;
+	TMap<int32, int32>WordLengthToMaxTries{ {3,6},  {4,8},  {5,10},  {6,12},  {7,14},  {8,16} };
+	return WordLengthToMaxTries[MyHiddenWord.length()];
 }
 
 int32 FBullsAndCowsGame::GetMaxWordLength() const

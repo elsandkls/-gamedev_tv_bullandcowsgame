@@ -45,6 +45,6 @@ private:
 	int32 MyMaxTries; // private member variables
 	int32 MaxWordLength; // private member variables 
 	FString MyHiddenWord; 
-	FString MyHiddenWordList[6] = { "plants","fruity","shovel","bucket","garden","planet" };
+	FString MyHiddenWordList[25] = { "plants","fruity","shovel","bucket","garden","planet", "orgasmic", "gasiform", "origamis", "algorism", "organism", "isograms", "gouramis", "isogram", "gambirs", "gisarme", "imagers", "imagoes", "mirages", "armings", "margins", "morgans", "origans", "roaming", "signora" };
 
 };

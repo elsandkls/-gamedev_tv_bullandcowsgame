@@ -36,18 +36,20 @@ void PrintIntro()
 {
 	// introduce the game    
 	int32 word_length = BCGame.GetMaxWordLength();
-	std::cout << "Welcome to Bulls and Cows, a fun word game\n";
-	std::cout << "Can you guess the " << word_length;
-	std::cout << " letter isogram I'm thinking of?\n";
+	std::cout << ".:*~*: ._. : *~*: ._. : *~*: ._. : *~*: ._. : *~*:." << std::endl; 
+	std::cout << "Welcome to Bulls and Cows, a fun word game. \n";
+	std::cout << ".:*~*: ._. : *~*: ._. : *~*: ._. : *~*: ._. : *~*:." << std::endl;
+	std::cout << "Can you guess the " << word_length << " letter isogram I'm thinking of?\n";
 	std::cout << std::endl;
 }
 
 FText GetUserInput()
 {
 	int32 Try = BCGame.GetCurrentTry();
+	int32 maxTry = BCGame.GetMaxTries();
 	FText Guess = "";
 	// get a guess fron the user 
-	std::cout << "Try: " << Try << "   \n What is your guess? ";
+	std::cout << "Try: " << Try << " of "<< maxTry << "  \n What is your guess? ";
 	std::getline(std::cin, Guess);
 	std::cout << std::endl; 
 	return Guess;
@@ -107,8 +109,7 @@ void PlayGame()
 		}
 		else
 		{
-			std::cout << "Bulls = " << BullCowCount.Bulls << std::endl;
-			std::cout << "Cows = " << BullCowCount.Cows << std::endl;
+			std::cout << "Bulls = " << BullCowCount.Bulls <<  "\t Cows = " << BullCowCount.Cows << std::endl;
 			std::cout << std::endl;
 			Status = EGuessStatus::GuessIsNull; // reset to default to prepare for next user input round.
 		}
@@ -145,7 +146,8 @@ void PrintGameSummary(FText Guess)
 	}
 	else
 	{
-		std::cout << "Better luck next time.\n";
-	} 
+		std::cout << "Better luck next time.\n"; 
+	}
+	std::cout << ".:*~*: ._. : *~*: ._. : *~*: ._. : *~*: ._. : *~*:." << std::endl;
 	std::cout << std::endl;
 }
