@@ -1,4 +1,6 @@
+#pragma once
 #include "FBullsAndCowsGame.h"
+// compatibility with UnrealEngine
 #include <map>
 #define TMap std::map
 

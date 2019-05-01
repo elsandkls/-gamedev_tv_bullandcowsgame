@@ -1,9 +1,13 @@
+/*
+The game logic(no view code or direct user interaction)
+The game is a simple gues the word game.
+*/
 #pragma once
 #include <string> 
 
-
-using FString = std::string; // compatibility with UnrealEngine
-using int32 = int; // compatibility with UnrealEngine
+// compatibility with UnrealEngine
+using FString = std::string;  
+using int32 = int;  
 
 struct FBullCowCount
 {

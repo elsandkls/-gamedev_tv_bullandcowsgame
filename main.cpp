@@ -1,16 +1,18 @@
 /*
-	This is a console excuteable. 
-	See FBullsAndCowsGame for details.
+	This is a console excuteable.  
 */
 // Simple Game: Bulls and Cows
 // Udemy Unreal Course
+#pragma once
 #include <iostream> 
 #include <string> 
 #include "FBullsAndCowsGame.h" 
 
-using FText = std::string; // compatibility with UnrealEngine
-using int32 = int; // compatibility with UnrealEngine
+// compatibility with UnrealEngine
+using FText = std::string;  
+using int32 = int;  
 
+// function prototypes
 void PrintIntro();
 void PlayGame();
 FText UserInput(); 
@@ -57,7 +59,7 @@ FText GetUserInput()
 
 void GameOutput(FText Guess)
 {	 
-	// repeat the guess back to them
+	// repeat the guess back to the user
 	std::cout << "Your guess was: " << Guess;
 	std::cout << std::endl;
 }
