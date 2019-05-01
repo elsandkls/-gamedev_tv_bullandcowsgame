@@ -1,12 +1,19 @@
+/*
+	This is a console excuteable. 
+	See FBullsAndCowsGame for details.
+*/
 // Simple Game: Bulls and Cows
 // Udemy Unreal Course
 #include <iostream> 
 #include <string> 
 #include "FBullsAndCowsGame.h" 
 
+using FText = std::string; // compatibility with UnrealEngine
+using int32 = int; // compatibility with UnrealEngine
+
 void PrintIntro();
 void PlayGame();
-std::string UserInput();
+FText UserInput(); 
 void GameOutput();
 bool AskToPlayAgain();
 bool Answer = true;
@@ -27,26 +34,26 @@ int main()
 void PrintIntro()
 {
 	// introduce the game    
-	int WORLD_LENGTH = BCGame.GetMaxWordLength();
+	int32 word_length = BCGame.GetMaxWordLength();
 	std::cout << "Welcome to Bulls and Cows, a fun word game\n";
-	std::cout << "Can you guess the " << WORLD_LENGTH;
+	std::cout << "Can you guess the " << word_length;
 	std::cout << " letter isogram I'm thinkng of?\n";
 	std::cout << std::endl;
 }
 
-std::string UserInput()
+FText GetUserInput()
 {
-	std::string Guess = "";
+	int32 Try = BCGame.GetCurrentTry();
+	FText Guess = "";
 	// get a guess fron the user 
-	std::cout << "What is your guess?\n";
+	std::cout << "Try: " << Try << "   \n What is your guess? ";
 	std::getline(std::cin, Guess);
-	std::cout << std::endl;
-
+	std::cout << std::endl; 
 	return Guess;
 }
 
-void GameOutput(std::string Guess)
-{
+void GameOutput(FText Guess)
+{	 
 	// repeat the guess back to them
 	std::cout << "Your guess was: " << Guess;
 	std::cout << std::endl;
@@ -54,25 +61,33 @@ void GameOutput(std::string Guess)
 
 void PlayGame()
 {
-	int limit = BCGame.GetMaxTries();
-	std::cout << limit << std::endl;
+	BCGame.Reset();
 
-	std::string Guess = "";
-	// loop for the number of user guesses
-	for (int count = 1; count <= limit; count++)
+	int32 limit = BCGame.GetMaxTries();
+	//std::cout << limit << std::endl;
+	FText Guess = "";
+	// loop for the number of user guesses -- lesson 53
+	for (int32 count = 1; count <= limit; count++)
 	{
-		Guess = UserInput();
+		Guess = GetUserInput(); 
+		EGuessStatus Status = BCGame.CheckGuessValidity(Guess);
 		// repeat the guess back to them
 		GameOutput(Guess);
+		//submit guess to game
+		FBullCowCount BullCowCount = BCGame.ProcessGuess(Guess);
+		std::cout << "Bulls = " << BullCowCount.Bulls << std::endl;
+		std::cout << "Cows = " << BullCowCount.Cows << std::endl;
+		std::cout << std::endl;
 	}
-
+	std::cout << std::endl;
+	// TODO summarize the game
 }
 
 bool AskToPlayAgain()
 {
 	bool UASSwitch;
 	std::cout << "Do you want to play again?";
-	std::string Response = "";
+	FText Response = "";
 	std::getline(std::cin, Response);
 	if (Response[0] == 'y' || Response[0] == 'Y')
 	{

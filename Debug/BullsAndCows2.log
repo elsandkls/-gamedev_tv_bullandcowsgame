@@ -1,4 +1,5 @@
 ﻿  FBullsAndCowsGame.cpp
-  main.cpp
-  Generating Code...
+Z:\Users\els\source\repos\BullsAndCows2\FBullsAndCowsGame.cpp(77): warning C4018: '<': signed/unsigned mismatch
+Z:\Users\els\source\repos\BullsAndCows2\FBullsAndCowsGame.cpp(79): warning C4018: '<': signed/unsigned mismatch
+Z:\Users\els\source\repos\BullsAndCows2\FBullsAndCowsGame.cpp(102): warning C4018: '<': signed/unsigned mismatch
   BullsAndCows2.vcxproj -> Z:\Users\els\source\repos\BullsAndCows2\Debug\BullsAndCows2.exe

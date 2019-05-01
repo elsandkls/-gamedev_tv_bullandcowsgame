@@ -1,37 +1,150 @@
 #include "FBullsAndCowsGame.h"
 
+FBullsAndCowsGame::FBullsAndCowsGame()
+{
+	// initialization code 
+	Reset();
+}
+
 void FBullsAndCowsGame::Reset()
 {
+	// constants defintions
+	constexpr int32 MAX_TRIES = 5;
+	//constexpr int32 MAX_WORDLENGTH = 9;
+	const FString HIDDEN_WORD = "planet";
+	int32 MAX_WORDLENGTH = HIDDEN_WORD.length();
+
+	// Variables used in program
+	MaxWordLength = MAX_WORDLENGTH;
+	MyMaxTries = MAX_TRIES;
+	MyCurrentTry = 1; // varies during programs lifecycle
+	MyHiddenWord = HIDDEN_WORD;
+
 	return;
 }
 
-int FBullsAndCowsGame::GetMaxTries()
+int32 FBullsAndCowsGame::GetMaxTries() const
 {
 	return MyMaxTries;
 }
 
-int FBullsAndCowsGame::GetCurrentTry()
+int32 FBullsAndCowsGame::GetMaxWordLength() const
 {
-	return 0;
+	return MaxWordLength;
 }
 
-bool FBullsAndCowsGame::IsGameWon()
+int32 FBullsAndCowsGame::GetCurrentTry() const
+{
+	return MyCurrentTry;
+}
+
+void FBullsAndCowsGame::SetCurrentTry()
+{
+	MyCurrentTry++;
+	return;
+}
+
+bool FBullsAndCowsGame::IsGameWon() const
 {
 	return false;
 }
 
-bool FBullsAndCowsGame::CheckGuessValidity(std::string)
+EGuessStatus FBullsAndCowsGame::CheckGuessValidity(FString Guess)
 {
-	return false;
+	if (IsIsogram(Guess) == false) // if the guess isn't an isogram
+	{	// return error
+		return EGuessStatus::NotIsogram;
+	}
+	else if (IsLowerCase(Guess) == false) // if the guess isn't all lowercase
+	{	// return error
+		return EGuessStatus::NotLowerCase;
+	}
+	else if (GetMaxWordLength() != Guess.length()) // if the guess length is wrong
+	{	// return error
+		return EGuessStatus::IncorrectCharLength;
+	}	
+	else // otherwise
+	{	// return ok
+		return EGuessStatus::OK;
+	} 
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+bool FBullsAndCowsGame::IsIsogram(FString Guess)
+{
+	int32 charMatchsFound = 0;
+	int32 outercharcount = 0;
+	int32 innercharcount = 0;
+	for (outercharcount = 0; outercharcount < Guess.length(); outercharcount++)
+	{
+		for (innercharcount = 0; innercharcount < Guess.length(); innercharcount++)
+		{
+			if (Guess[outercharcount] == Guess[innercharcount] && outercharcount != innercharcount)
+			{
+				charMatchsFound++;
+			}
+		}
+	}
+	if(charMatchsFound > 0)
+	{ 
+		return false;
+	}
+	else
+	{ 
+		return true;
+	}
+}
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+bool FBullsAndCowsGame::IsLowerCase(FString Guess)
+{
+	int32 charcheck = 0;
+	int32 charcount = 0;
+
+	for (charcount = 0; charcount < Guess.length(); charcount++)
+	{
+		charcheck += islower(Guess[charcount]);
+	}
+
+	// look up islower to see what the return values are. just guessing
+	if( charcheck > 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+// recieves a valid guess, increments turn, and returns count
+FBullCowCount FBullsAndCowsGame::ProcessGuess(FString Guess)
+{
+	// increment the turn number
+	SetCurrentTry();
+
+	// setup a return variable
+	FBullCowCount BullCowCount;
+	
+	// loop through all letters in the guess
+	int32 HiddenWordLength = MyHiddenWord.length();
+	int32 GuessWordLength = Guess.length();
+
+	for (int32 HiddenWordChar = 0; HiddenWordChar < HiddenWordLength; HiddenWordChar++)
+	{
+		for (int32 GuessWordChar = 0; GuessWordChar < GuessWordLength; GuessWordChar++)
+		{
+			// compare letters against the hidden word
+			if (HiddenWordChar == GuessWordChar)
+			{
+				if (MyHiddenWord[HiddenWordChar] == Guess[GuessWordChar])
+				{	// if they match increment bulls (location matters)
+					BullCowCount.Bulls++;
+				}
+				else
+				{	// else increment cows
+					BullCowCount.Cows++;
+				}
+			} 
+		}
+	}
+	return BullCowCount;
+}

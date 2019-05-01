@@ -1,18 +1,44 @@
 #pragma once
 #include <string> 
 
+using FString = std::string; // compatibility with UnrealEngine
+using int32 = int; // compatibility with UnrealEngine
+
+struct FBullCowCount
+{
+	int32 Bulls = 0;
+	int32 Cows = 0;
+};
+
+enum class EGuessStatus
+{
+	NotIsogram,
+	NotLowerCase,
+	IncorrectCharLength,
+	OK
+};
+
 class FBullsAndCowsGame
 {
-public:   //get and set members/actions
+public:   //get and set members/actions	
+	FBullsAndCowsGame(); // constructor
+
+	int32 GetMaxTries() const;
+	int32 GetMaxWordLength() const;
+	int32 GetCurrentTry() const;
+	bool IsGameWon() const;
+
 	void Reset(); // TODO: change the return value later.
-	int GetMaxTries();
-	int GetMaxWordLength();
-	int GetCurrentTry();
-	bool IsGameWon();
-	bool CheckGuessValidity(std::string);  // TODO: change the return value later.
+	EGuessStatus CheckGuessValidity(FString);  // TODO: change the return value later.
+	bool IsIsogram(FString Guess);
+	bool IsLowerCase(FString Guess);
+	void SetCurrentTry();
+	FBullCowCount ProcessGuess(FString);
 
 private:
-	int MyCurrentTry = 1; // private member variables
-	int MyMaxTries = 5; // private member variables
-	int MaxWordLength = 9; // private member variables
+	// see initialization section for starting values
+	int32 MyCurrentTry; // private member variables
+	int32 MyMaxTries; // private member variables
+	int32 MaxWordLength; // private member variables
+	FString MyHiddenWord; 
 };
