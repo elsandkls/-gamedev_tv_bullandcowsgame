@@ -1,0 +1,8 @@
+﻿  FBullsAndCowsGame.cpp
+Z:\GitHub\-gamedev_tv_bullandcowsgame\FBullsAndCowsGame.cpp(19,45): warning C4267:  'initializing': conversion from 'size_t' to 'int32', possible loss of data
+Z:\GitHub\-gamedev_tv_bullandcowsgame\FBullsAndCowsGame.cpp(33,51): warning C4267:  'argument': conversion from 'size_t' to 'int', possible loss of data
+Z:\GitHub\-gamedev_tv_bullandcowsgame\FBullsAndCowsGame.cpp(168,48): warning C4267:  'initializing': conversion from 'size_t' to 'int32', possible loss of data
+  main.cpp
+  Generating Code...
+Z:\GitHub\-gamedev_tv_bullandcowsgame\FBullsAndCowsGame.cpp(169,40): warning C4267:  'initializing': conversion from 'size_t' to 'int32', possible loss of data
+  BullsAndCows2.vcxproj -> Z:\GitHub\-gamedev_tv_bullandcowsgame\x64\Debug\BullsAndCows2.exe
